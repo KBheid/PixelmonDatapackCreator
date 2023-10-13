@@ -6,19 +6,19 @@ using UnityEngine;
 public class MoveSearchBar : MonoBehaviour
 {
 	public TMPro.TMP_InputField inputField;
-	public TMPro.TMP_Dropdown dropdown;
+	public PerformantLargeDropdown dropdown;
 
 	private bool fixInputFieldPosition = false;
 
 	public void SearchSelected()
 	{
-		dropdown.enabled = true;
+		dropdown.Show();
 		SearchUpdated();
 	}
 
 	public void SearchDeselected()
 	{
-		//dropdown.enabled = false;
+		StartCoroutine(nameof(DelayDropdownClose));
 	}
 
 	public void SearchUpdated()
@@ -28,10 +28,9 @@ public class MoveSearchBar : MonoBehaviour
 		var valid = MovesManager.instance.moves.Where(move => move.attackName.ToLower().Contains(searchString));
 		var validList = new List<Move>(valid);
 
-		var options = validList.ConvertAll(x => new TMPro.TMP_Dropdown.OptionData(x.attackName, null));
-		
-		dropdown.ClearOptions();
-		dropdown.AddOptions(options);
+		var options = validList.ConvertAll(x => x.attackName);
+
+		dropdown.SetOptions(options);
 
 		RefreshOptions();
 		inputField.ActivateInputField();
@@ -41,7 +40,8 @@ public class MoveSearchBar : MonoBehaviour
 
 	public void OptionSelected()
 	{
-		inputField.text = dropdown.options[dropdown.value].text;
+		inputField.text = dropdown.selectedItem;
+		dropdown.Hide();
 	}
 
 	private void RefreshOptions()
@@ -58,5 +58,12 @@ public class MoveSearchBar : MonoBehaviour
 			inputField.MoveTextEnd(true);
 			fixInputFieldPosition = false;
 		}
+	}
+
+
+	IEnumerator DelayDropdownClose()
+	{
+		yield return new WaitForSeconds(0.1f);
+		dropdown.Hide();
 	}
 }

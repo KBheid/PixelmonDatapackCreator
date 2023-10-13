@@ -9,7 +9,7 @@ public class FormSearchBar : MonoBehaviour
 	public UnityEvent ItemSelected;
 
 	public TMPro.TMP_InputField inputField;
-	public TMPro.TMP_Dropdown dropdown;
+	public PerformantLargeDropdown dropdown;
 	public List<Form> forms;
 
 	private bool fixInputFieldPosition = false;
@@ -22,7 +22,7 @@ public class FormSearchBar : MonoBehaviour
 
 	public void SearchDeselected()
 	{
-		//dropdown.enabled = false;
+		StartCoroutine(nameof(DelayDropdownClose));
 	}
 
 	public void SearchUpdated()
@@ -32,10 +32,9 @@ public class FormSearchBar : MonoBehaviour
 		var valid = forms.Where(form => form.name.ToLower().Contains(searchString));
 		var validList = new List<Form>(valid);
 
-		var options = validList.ConvertAll(x => new TMPro.TMP_Dropdown.OptionData(x.name, null));
-		
-		dropdown.ClearOptions();
-		dropdown.AddOptions(options);
+		var options = validList.ConvertAll(x => x.name);
+
+		dropdown.SetOptions(options);
 
 		RefreshOptions();
 		inputField.ActivateInputField();
@@ -45,7 +44,7 @@ public class FormSearchBar : MonoBehaviour
 
 	public void OptionSelected()
 	{
-		inputField.text = dropdown.options[dropdown.value].text;
+		inputField.text = dropdown.selectedItem;
 		ItemSelected.Invoke();
 	}
 
@@ -63,5 +62,10 @@ public class FormSearchBar : MonoBehaviour
 			inputField.MoveTextEnd(true);
 			fixInputFieldPosition = false;
 		}
+	}
+	IEnumerator DelayDropdownClose()
+	{
+		yield return new WaitForSeconds(0.1f);
+		dropdown.Hide();
 	}
 }

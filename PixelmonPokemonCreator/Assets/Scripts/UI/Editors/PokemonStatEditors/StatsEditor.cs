@@ -24,7 +24,14 @@ public class StatsEditor : MonoBehaviour
 		PokemonManager.OnPokemonSwitched += PokemonSwitched;
 		PokemonManager.OnPokemonFormSwitched += FormSwitched;
 
+		PokemonSwitched(selectedPokemon);
 		FormSwitched(selectedForm);
+	}
+
+	private void OnDisable()
+	{
+		PokemonManager.OnPokemonSwitched -= PokemonSwitched;
+		PokemonManager.OnPokemonFormSwitched -= FormSwitched;
 	}
 
 	private void FormSwitched(Form m)
@@ -46,5 +53,6 @@ public class StatsEditor : MonoBehaviour
 	private void PokemonSwitched(Pokemon p)
 	{
 		selectedPokemon = p;
+		gigantamaxEditor.SetPokemon(p);
 	}
 }

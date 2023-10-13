@@ -9,7 +9,9 @@ public class GigantamaxEditor : MonoBehaviour
     [SerializeField] Toggle canHaveFactorToggle;
     [SerializeField] TMPro.TMP_InputField formInput;
     [SerializeField] TMPro.TMP_InputField moveInput;
+    [SerializeField] FormSearchBar formSearchBar;
 
+    Pokemon selectedPokemon;
     Form selectedForm;
 
     private bool updating = false;
@@ -34,7 +36,10 @@ public class GigantamaxEditor : MonoBehaviour
             moveInput.text = selectedForm.gigantamax.move;
         else
             moveInput.text = "";
-        
+
+        List<Form> validForms = new List<Form>(selectedPokemon.forms);
+        formSearchBar.forms = validForms;
+
         updating = false;
     }
 
@@ -61,6 +66,12 @@ public class GigantamaxEditor : MonoBehaviour
         if (moveInput.text != "")
             selectedForm.gigantamax.move = moveInput.text;
 	}
+
+    public void SetPokemon(Pokemon p)
+	{
+        selectedPokemon = p;
+        UpdateValues();
+    }
 
     public void SetForm(Form f)
     {

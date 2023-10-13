@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PerformantLargeDropdown : MonoBehaviour
 {
 	public UnityEvent<string> OptionSelectedEvent;
+	public bool disallowDuplicates = false;
 
 	[SerializeField] PerformantDropdownItem dropdownItemPrefab;
 	[SerializeField] GameObject dropdownWindow;
@@ -13,12 +15,16 @@ public class PerformantLargeDropdown : MonoBehaviour
 
 	public string selectedItem;
 
+	List<string> currentStringOptions = new List<string>();
 	List<PerformantDropdownItem> options = new List<PerformantDropdownItem>();
-	int currentItemCount = 0;
 
 	public void SetOptions(List<string> strOptions)
 	{
-		ReserveSpaceIfNecessary(strOptions.Count);
+		List<string> possiblyDistinctOptions = strOptions;
+		if (disallowDuplicates)
+			possiblyDistinctOptions = new List<string>(possiblyDistinctOptions.Distinct());
+
+		ReserveSpaceIfNecessary(possiblyDistinctOptions.Count);
 
 		// Set text and enable required options
 		for (int i=0; i<strOptions.Count; i++)
@@ -33,20 +39,15 @@ public class PerformantLargeDropdown : MonoBehaviour
 			options[i].gameObject.SetActive(false);
 		}
 
-		currentItemCount = strOptions.Count;
+		currentStringOptions = possiblyDistinctOptions;
 	}
 
 	public void AddOptions(List<string> strOptions)
 	{
-		ReserveSpaceIfNecessary(strOptions.Count);
+		List<string> joinedOptions = currentStringOptions;
+		joinedOptions.AddRange(strOptions);
 
-		for (int i=0; i<strOptions.Count; i++)
-		{
-			PerformantDropdownItem option = options[i + currentItemCount];
-			option.textItem.text = strOptions[i];
-			option.gameObject.SetActive(true);
-		}
-		currentItemCount += strOptions.Count;
+		SetOptions(joinedOptions);
 	}
 
 	public void ClearOptions()
@@ -58,6 +59,8 @@ public class PerformantLargeDropdown : MonoBehaviour
 		{
 			item.gameObject.SetActive(false);
 		}
+
+		currentStringOptions.Clear();
 	}
 
 	public void Show()

@@ -76,4 +76,13 @@ public class PokemonManager : MonoBehaviour
 		OnPokemonFormSwitched?.Invoke(f);
 	}
 
+
+	public Pokemon FindPokemon(string name)
+	{
+		foreach (Pokemon p in pokemon)
+			if (p.name.ToLower() == name.ToLower())
+				return p;
+
+		return null;
+	}
 }

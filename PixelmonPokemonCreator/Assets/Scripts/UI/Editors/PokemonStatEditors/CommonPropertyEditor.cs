@@ -18,74 +18,49 @@ public class CommonPropertyEditor : MonoBehaviour
 	[SerializeField] TMPro.TMP_InputField weightInput;
 	[SerializeField] TMPro.TMP_InputField catchRateInput;
 	[SerializeField] TMPro.TMP_InputField malePercentInput;
+	[SerializeField] TMPro.TMP_Dropdown defaultBaseFormDropdown;
 
 	private Form selectedForm;
 	private Pokemon selectedPokemon;
 
 	bool updating = false;
 
-	public void UpdateName()
-	{
-		string pokeName = pokemonNameInput.text;
-		selectedPokemon.name = pokeName;
-		PokemonManager.instance.SelectPokemon(selectedPokemon);
-	}
-	public void UpdateDexNumber()
-	{
-		selectedPokemon.dex = dexNumberInput.text.ToIntegerOrNegativeOne();
-	}
-	public void UpdateGenNumber()
-	{
-		selectedPokemon.generation = genNumberInput.text.ToIntegerOrNegativeOne();
-	}
-	public void UpdateFormName()
-	{
-		string formName = formNameInput.text;
-		selectedForm.name = formName;
-		PokemonManager.instance.SelectForm(selectedForm);
-	}
-	public void UpdateExpGroup()
-	{
-		selectedForm.experienceGroup = expGroupDropdown.options[expGroupDropdown.value].text;
-	}
-	public void UpdateTypes()
+	public void UpdatePokemon()
 	{
 		if (updating)
 			return;
 
-		string type1 = type1Dropdown.options[type1Dropdown.value].text;
-		string type2 = type2Dropdown.options[type2Dropdown.value].text;
+		string pokeName = pokemonNameInput.text;
+		selectedPokemon.name = pokeName;
 
-		if (type1 == "[ NONE ]")
-		{
-			type2Dropdown.value = 0;
-			selectedForm.types = new string[] { };
-			return;
-		}
-
-		if (type2 == "[ NONE ]")
-		{
-			selectedForm.types = new string[] { type1 };
-			return;
-		}
-
-		selectedForm.types = new string[] { type1, type2 };
+		selectedPokemon.dex = dexNumberInput.text.ToIntegerOrNegativeOne();
+		selectedPokemon.generation = genNumberInput.text.ToIntegerOrNegativeOne();
 	}
-	public void UpdateEggCycles()
+
+	public void UpdateForm()
 	{
+		if (updating)
+			return;
+
+		string formName = formNameInput.text;
+		selectedForm.name = formName;
+
+		selectedForm.experienceGroup = expGroupDropdown.options[expGroupDropdown.value].text;
+		selectedForm.types = GetTypeValues();
 		selectedForm.eggCycles = eggCyclesInput.text.ToIntegerOrNegativeOne();
-	}
-	public void UpdateWeight()
-	{
 		selectedForm.weight = weightInput.text.ToIntegerOrNegativeOne();
-	}
-	public void UpdateCatchRate()
-	{
 		selectedForm.catchRate = catchRateInput.text.ToIntegerOrNegativeOne();
-	}
-	public void UpdateMalePercent()
-	{
 		selectedForm.malePercentage = malePercentInput.text.ToFloatOrNegativeOne();
+	}
+
+	public void RefreshFormContent()
+	{
+		PokemonManager.instance.SelectForm(selectedForm);
+	}
+
+	public void RefreshPokemonContent()
+	{
+		PokemonManager.instance.SelectPokemon(selectedPokemon);
 	}
 
 
@@ -194,10 +169,32 @@ public class CommonPropertyEditor : MonoBehaviour
 		List<TMPro.TMP_Dropdown.OptionData> formNames = forms.ConvertAll(form => new TMPro.TMP_Dropdown.OptionData(form.name));
 		formDropdown.options = formNames;
 		formDropdown.options.Add(new TMPro.TMP_Dropdown.OptionData("[ Add Form ]"));
+		formDropdown.SetDropdownToStringValue(selectedForm.name);
+
+		defaultBaseFormDropdown.options = formNames;
+		defaultBaseFormDropdown.SetDropdownToStringValueOrDefault(selectedForm.defaultBaseForm, "");
 
 		updating = false;
 	}
 
+
+	private string[] GetTypeValues()
+	{
+		string type1 = type1Dropdown.options[type1Dropdown.value].text;
+		string type2 = type2Dropdown.options[type2Dropdown.value].text;
+
+		if (type1 == "[ NONE ]")
+		{
+			type2Dropdown.value = 0;
+			return new string[] { }; ;
+		}
+
+		if (type2 == "[ NONE ]")
+		{
+			return new string[] { type1 }; ;
+		}
+		return new string[] { type1, type2 };
+	}
 
 	private void OnEnable()
 	{

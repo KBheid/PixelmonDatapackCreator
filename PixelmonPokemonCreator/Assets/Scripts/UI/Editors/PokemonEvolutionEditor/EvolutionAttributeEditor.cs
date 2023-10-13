@@ -15,6 +15,7 @@ public class EvolutionAttributeEditor : MonoBehaviour
 	[SerializeField] TMPro.TMP_Dropdown evoTypeDropdown;
 	[SerializeField] TMPro.TMP_InputField levelInput;
 	[SerializeField] TMPro.TMP_InputField itemIDInput;
+	[SerializeField] FormSearchBar formSearch;
 
 	public List<EvoTypeWindow> windows;
 
@@ -67,6 +68,13 @@ public class EvolutionAttributeEditor : MonoBehaviour
 			itemIDInput.text = e.item.itemID;
 		else
 			itemIDInput.text = "";
+
+		Pokemon evoTarget = PokemonManager.instance.FindPokemon(species);
+		if (evoTarget != null)
+		{
+			List<Form> forms = new List<Form>(evoTarget.forms);
+			formSearch.forms = forms;
+		}
 
 		UpdateWindow(e.evoType);
 	}
