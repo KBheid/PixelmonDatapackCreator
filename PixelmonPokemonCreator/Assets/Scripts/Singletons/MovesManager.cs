@@ -12,6 +12,7 @@ public class MovesManager : MonoBehaviour
 	}
 
 	public List<Move> moves;
+	public List<string> abilities;
 
 	public Move FindMove(string name)
     {
@@ -22,5 +23,10 @@ public class MovesManager : MonoBehaviour
         }
 
 		return null;
+    }
+
+	public bool AbilityExists(string ability)
+    {
+		return abilities.Contains(ability);
     }
 }

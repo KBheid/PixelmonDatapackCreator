@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MoveSearchBar : MonoBehaviour
 {
+	public UnityEvent ItemSelected;
+
 	public TMPro.TMP_InputField inputField;
 	public PerformantLargeDropdown dropdown;
 
@@ -42,6 +45,7 @@ public class MoveSearchBar : MonoBehaviour
 	{
 		inputField.text = dropdown.selectedItem;
 		dropdown.Hide();
+		ItemSelected?.Invoke();
 	}
 
 	private void RefreshOptions()

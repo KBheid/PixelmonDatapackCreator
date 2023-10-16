@@ -21,6 +21,7 @@ public class Validator : MonoBehaviour
 			List<ValidationError> errors = new List<ValidationError>();
 			errors.AddRange(ValidateStats(p));
             errors.AddRange(ValidateEvolutions(p));
+            errors.AddRange(ValidateMoves(p));
 			
 			if (errors.Count > 0)
 				totalErrors.Add(errors);
@@ -759,6 +760,58 @@ public class Validator : MonoBehaviour
 				});
 		}
 	}
+    #endregion
+
+    #region Move Validation
+	List<ValidationError> ValidateMoves(Pokemon p)
+    {
+		string levelUpMoveUnresolvableError = FORM_ERROR_FORMAT + "Error: Move could not be resolved \"{2}\"";
+		string levelUpMoveInvalidLevelError = FORM_ERROR_FORMAT + "Error: Move cannot be learned at Pokemon level {2}";
+
+
+		List<ValidationError> errors = new List<ValidationError>();
+
+		foreach (Form f in p.forms)
+        {
+			if (f.moves == null)
+				continue;
+
+			// Levelup Moves
+			if (f.moves.levelUpMoves != null) {
+				foreach (Levelupmove lum in f.moves.levelUpMoves)
+                {
+					if (lum.attacks == null)
+						continue;
+
+					foreach (string att in lum.attacks)
+                    {
+						if (MovesManager.instance.FindMove(att) == null)
+							errors.Add(new ValidationError()
+							{
+								errorType = "Unresolvable level-up move",
+								pokemon = p,
+								form = f,
+								errorMessage = string.Format(levelUpMoveUnresolvableError, p.name, f.name, att)
+							});
+					}
+
+
+					if (lum.level < 0)
+						errors.Add(new ValidationError()
+						{
+							errorType = "Invalid level for level up move",
+							pokemon = p,
+							form = f,
+							errorMessage = string.Format(levelUpMoveInvalidLevelError, p.name, f.name, lum.level)
+						});
+				}
+			}
+
+        }
+
+
+		return errors;
+    }
     #endregion
 }
 

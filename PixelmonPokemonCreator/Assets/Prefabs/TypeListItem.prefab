@@ -288,7 +288,7 @@ MonoBehaviour:
   Padding: {x: 0, y: 0}
   MaxSize: {x: 1000, y: Infinity}
   MinSize: {x: 180, y: 0}
-  ControlAxes: 3
+  ControlAxes: -1
 --- !u!114 &4648495196004103936
 MonoBehaviour:
   m_ObjectHideFlags: 0
