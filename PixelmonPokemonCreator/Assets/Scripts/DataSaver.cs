@@ -19,9 +19,9 @@ public class DataSaver : MonoBehaviour
 
 		foreach (Pokemon p in PokemonManager.instance.pokemon)
 		{
-			string cleanedPokemonName = p.name.Replace(' ', '_').Replace("'", "");
+			string cleanedPokemonName = p.name.Replace(' ', '_').Replace("'", "").ToLower();
 			
-			string fileName = p.dex.ToString() + "_" + cleanedPokemonName + ".json";
+			string fileName = p.dex.ToString("000") + "_" + cleanedPokemonName + ".json";
 
 			string data = JsonUtility.ToJson(p, true);
 
