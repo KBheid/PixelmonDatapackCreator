@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class EvolutionEditor : MonoBehaviour
@@ -14,13 +16,13 @@ public class EvolutionEditor : MonoBehaviour
 
 	private void OnEnable()
 	{
-		PokemonManager.OnPokemonSwitched += PokemonManager_OnPokemonSwitched;
+		PokemonManager.OnPokemonSwitched += PokemonSwitched;
 		PokemonManager.OnPokemonFormSwitched += PokemonFormSwitched;
 
 		selectedForm = PokemonManager.instance.selectedForm;
 	}
 
-	private void PokemonManager_OnPokemonSwitched(Pokemon p)
+	private void PokemonSwitched(Pokemon p)
 	{
 		PokemonFormSwitched(p.forms[0]);
 	}
@@ -74,5 +76,6 @@ public class EvolutionEditor : MonoBehaviour
 
 		PokemonManager.instance.SelectForm(selectedForm);
 	}
+
 
 }

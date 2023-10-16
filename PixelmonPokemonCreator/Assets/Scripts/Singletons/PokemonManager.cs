@@ -80,7 +80,7 @@ public class PokemonManager : MonoBehaviour
 	public Pokemon FindPokemon(string name)
 	{
 		foreach (Pokemon p in pokemon)
-			if (p.name.ToLower() == name.ToLower())
+			if (p.name == name)
 				return p;
 
 		return null;

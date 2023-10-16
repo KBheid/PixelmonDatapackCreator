@@ -12,4 +12,15 @@ public class MovesManager : MonoBehaviour
 	}
 
 	public List<Move> moves;
+
+	public Move FindMove(string name)
+    {
+		foreach (Move m in moves)
+        {
+			if (m.attackName == name)
+				return m;
+        }
+
+		return null;
+    }
 }

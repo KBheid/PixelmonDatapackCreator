@@ -21,9 +21,9 @@ public class EvolutionConditionEditor : MonoBehaviour
 	[SerializeField] TMPro.TMP_InputField maxRangeSquaredScrollInput;	// evo scroll
 	[SerializeField] Toggle shinyToggle;					// shiny
 	[SerializeField] TMPro.TMP_InputField friendshipInput;	// friendship
-	[SerializeField] TMPro.TMP_InputField attackNameInput;  // move
+	[SerializeField] TMPro.TMP_InputField moveNameInput;	// move
 	[SerializeField] TMPro.TMP_Dropdown attackTypeDropdown;	// moveType
-	[SerializeField] TMPro.TMP_InputField moveInput;		// moveUses
+	[SerializeField] TMPro.TMP_InputField moveUsesNameInput;// moveUses
 	[SerializeField] TMPro.TMP_InputField moveUsesInput;	// moveUses
 	//[SerializeField] string[] withPokemon;
 	//[SerializeField] string[] withTypes;
@@ -114,13 +114,13 @@ public class EvolutionConditionEditor : MonoBehaviour
 				newCondition.friendship = friendshipInput.text.ToIntegerOrNegativeOne();
 				break;
 			case "move":
-				newCondition.attackName = moveInput.text;
+				newCondition.attackName = moveUsesNameInput.text;
 				break;
 			case "moveType":
 				newCondition.type = attackTypeDropdown.options[attackTypeDropdown.value].text;
 				break;
 			case "moveUses":
-				newCondition.move = moveInput.text;
+				newCondition.move = moveUsesNameInput.text;
 				newCondition.uses = moveUsesInput.text.ToIntegerOrNegativeOne();
 				break;
 			case "party":
@@ -171,7 +171,6 @@ public class EvolutionConditionEditor : MonoBehaviour
 	{
 		condition = c;
 
-		// TODO: update
 		evoConditionTypeDropdown.SetDropdownToStringValue(c.evoConditionType);
 		biomeEditor.SetBiomes(new List<string>());
 
@@ -207,13 +206,13 @@ public class EvolutionConditionEditor : MonoBehaviour
 				friendshipInput.text = c.friendship.ToString();
 				break;
 			case "move":
-				moveInput.text = c.attackName;
+				moveNameInput.text = c.attackName;
 				break;
 			case "moveType":
 				attackTypeDropdown.SetDropdownToStringValue(c.type);
 				break;
 			case "moveUses":
-				moveInput.text = c.move;
+				moveUsesNameInput.text = c.move;
 				moveUsesInput.text = c.uses.ToString();
 				break;
 			case "party":
