@@ -767,6 +767,8 @@ public class Validator : MonoBehaviour
     {
 		string levelUpMoveUnresolvableError = FORM_ERROR_FORMAT + "Error: Move could not be resolved \"{2}\"";
 		string levelUpMoveInvalidLevelError = FORM_ERROR_FORMAT + "Error: Move cannot be learned at Pokemon level {2}";
+		string abilityUnresolvableError		= FORM_ERROR_FORMAT + "Error: Ability could not be resolved \"{2}\"";
+		string hAbilityUnresolvableError	= FORM_ERROR_FORMAT + "Error: Hidden Ability could not be resolved \"{2}\"";
 
 
 		List<ValidationError> errors = new List<ValidationError>();
@@ -807,6 +809,33 @@ public class Validator : MonoBehaviour
 				}
 			}
 
+			// Abilities
+			if (f.abilities != null)
+            {
+				if (f.abilities.abilities != null)
+					foreach (string ability in f.abilities.abilities)
+						if (!MovesManager.instance.AbilityExists(ability))
+							errors.Add(new ValidationError()
+							{
+								errorType = "Unresolvable ability",
+								pokemon = p,
+								form = f,
+								errorMessage = string.Format(abilityUnresolvableError, p.name, f.name, ability)
+							});
+
+				if (f.abilities.hiddenAbilities != null)
+					foreach (string hAbility in f.abilities.hiddenAbilities)
+						if (!MovesManager.instance.AbilityExists(hAbility))
+							errors.Add(new ValidationError()
+							{
+								errorType = "Unresolvable hidden ability",
+								pokemon = p,
+								form = f,
+								errorMessage = string.Format(hAbilityUnresolvableError, p.name, f.name, hAbility)
+							});
+
+
+			}
         }
 
 
