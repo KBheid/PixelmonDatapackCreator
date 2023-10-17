@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2711772244494749064}
   - component: {fileID: 414301182999975718}
   - component: {fileID: 7583877994886318545}
-  - component: {fileID: 6386743558154880874}
+  - component: {fileID: 6868064474273304395}
   m_Layer: 5
   m_Name: AbilityListItem
   m_TagString: Untagged
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6386743558154880874}
+      - m_Target: {fileID: 6868064474273304395}
         m_TargetAssemblyTypeName: AbilityListItem, Assembly-CSharp
         m_MethodName: Select
         m_Mode: 1
@@ -270,7 +270,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976980173116003232}
   m_CullTransparentMesh: 1
---- !u!114 &6386743558154880874
+--- !u!114 &6868064474273304395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

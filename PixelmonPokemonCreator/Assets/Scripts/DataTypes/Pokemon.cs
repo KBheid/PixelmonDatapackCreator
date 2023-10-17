@@ -7,41 +7,70 @@ using UnityEngine;
 [Serializable]
 public class Pokemon
 {
-	public string name;						// Done
-	public int dex;							// Done
+	public string name;						
+	public int dex;							
+	[IgnoreEmptyArray][IgnoreEmptyStringArray]
 	public string[] defaultForms;
-	public Form[] forms;					// Done
-	public int generation;					// Done
+	public Form[] forms;					
+	public int generation;
+
+	public Pokemon() { }
 }
 
 [Serializable]
 public class Form
 {
-	public string name;						// Done
-	public string experienceGroup;			// Done
-	public Dimensions dimensions;			// Done
+	public string name;						
+	[IgnoreNull]
+	public string[] tags;
+	[IgnoreEmptyString][IgnoreNull]
+	public string experienceGroup;
+	[IgnoreNull]
+	public Dimensions dimensions;
+	[IgnoreAllFieldsNullFalseOrZero]
 	public Moves moves;
+	[IgnoreNull][IgnoreAllFieldsNullFalseOrZero]
 	public Abilities abilities;
+	[IgnoreAllFieldsNullFalseOrZero]
 	public Movement movement;
-	public Aggression aggression;			// Done
-	public Battlestats battleStats;			// Done
-	public string[] tags;					// Done
-	public Spawn spawn;						// Done
+	[IgnoreAllFieldsNullFalseOrZero]
+	public Aggression aggression;
+	[IgnoreAllFieldsNullFalseOrZero]
+	public Battlestats battleStats;
+	[IgnoreAllFieldsNullFalseOrZero]
+	public Spawn spawn;
+	[IgnoreNull][IgnoreEmptyArray][IgnoreEmptyStringArray]
 	public string[] possibleGenders;
+	[IgnoreNull][IgnoreEmptyArray]
 	public Genderproperty[] genderProperties;
-	public string[] eggGroups;				// Done
-	public string[] types;					// Done
+	[IgnoreEmptyArray][IgnoreEmptyStringArray]
+	public string[] eggGroups;				
+	[IgnoreEmptyArray][IgnoreEmptyStringArray]
+	public string[] types;
+	[IgnoreNull] /*[IgnoreEmptyArray]*/
 	public string[] preEvolutions;
+	[IgnoreNull]
 	public string defaultBaseForm;
+	//[IgnoreEmptyArray][IgnoreEmptyStringArray]
 	public string[] megaItems;
+	//[IgnoreEmptyArray][IgnoreEmptyStringArray]
 	public string[] megas;
-	public Gigantamax gigantamax;			// Done
-	public int eggCycles;					// Done
-	public float weight;					// Done
-	public int catchRate;					// Done
-	public float malePercentage;			// Done
+	[IgnoreAllFieldsNullFalseOrZero]
+	public Gigantamax gigantamax;
+	[IgnoreZero]
+	public int eggCycles;
+	[IgnoreZero]
+	public float weight;
+	[IgnoreZero]
+	public int catchRate;
+	[IgnoreZero]
+	public float malePercentage;			
+	[IgnoreNull][IgnoreEmptyArray]
 	public Evolution[] evolutions;
-	public Evyields evYields;				// Done
+	[IgnoreAllFieldsNullFalseOrZero]
+	public Evyields evYields;
+
+	public Form() { }
 }
 
 [Serializable]
@@ -50,28 +79,48 @@ public class Dimensions
 	public float height;
 	public float width;
 	public float length;
+	[IgnoreZero]
 	public float eyeHeight;
+	[IgnoreZero]
 	public float hoverHeight;
+
+	public Dimensions() { }
 }
 
 [Serializable]
 public class Moves
 {
+	[IgnoreNull]
 	public Levelupmove[] levelUpMoves;
+	[IgnoreNull]
 	public string[] tutorMoves;
+	[IgnoreNull]
 	public string[] eggMoves;
+	[IgnoreNull]
 	public string[] tmMoves8;
+	[IgnoreNull]
 	public string[] trMoves;
+	[IgnoreNull]
 	public string[] hmMoves;
+	[IgnoreNull]
 	public string[] transferMoves;
+	[IgnoreNull]
 	public string[] tmMoves7;
+	[IgnoreNull]
 	public string[] tmMoves6;
+	[IgnoreNull]
 	public string[] tmMoves5;
+	[IgnoreNull]
 	public string[] tmMoves4;
+	[IgnoreNull]
 	public string[] tmMoves3;
+	[IgnoreNull]
 	public string[] tmMoves2;
+	[IgnoreNull]
 	public string[] tmMoves1;
+	[IgnoreNull]
 	public string[] tmMoves;
+	[IgnoreNull]
 	public string[] tmMoves9;
 }
 
@@ -86,7 +135,10 @@ public class Levelupmove
 public class Abilities
 {
 	public string[] abilities;
+	[IgnoreNull][IgnoreEmptyArray][IgnoreEmptyStringArray]
 	public string[] hiddenAbilities;
+
+	public Abilities() { }
 }
 
 [Serializable]
@@ -96,9 +148,13 @@ public class Movement
 	public bool canFly;
 	public bool canSurf;
 	public bool canRideShoulder;
+	[IgnoreAllFieldsNullFalseOrZero]
 	public Ridingoffsets ridingOffsets;
+	[IgnoreNull][IgnoreAllFieldsNullFalseOrZero]
 	public Flyingparameters flyingParameters;
+	[IgnoreNull][IgnoreAllFieldsNullFalseOrZero]
 	public Mountedflyingparameters mountedFlyingParameters;
+	[IgnoreNull][IgnoreAllFieldsNullFalseOrZero]
 	public Swimmingparameters swimmingParameters;
 }
 
@@ -183,9 +239,9 @@ public class Swimmingparameters
 [Serializable]
 public class Aggression
 {
-	public int aggressive;
-	public int passive;
 	public int timid;
+	public int passive;
+	public int aggressive;
 }
 
 [Serializable]
@@ -214,18 +270,26 @@ public class Gigantamax
 {
 	public bool canHaveFactor;
 	public bool canGigantamax;
+	[IgnoreNull][IgnoreEmptyString]
 	public string form;
+	[IgnoreNull][IgnoreEmptyString]
 	public string move;
 }
 
 [Serializable]
 public class Evyields
 {
+	[IgnoreZero]
 	public int specialAttack;
+	[IgnoreZero]
 	public int specialDefense;
+	[IgnoreZero]
 	public int speed;
+	[IgnoreZero]
 	public int defense;
+	[IgnoreZero]
 	public int hp;
+	[IgnoreZero]
 	public int attack;
 }
 
@@ -256,15 +320,25 @@ public class Genderproperty
 public class Palette
 {
 	public string name;
+	[IgnoreNull]
 	public string texture;
-	public string sprite;
-	public string particle;
-	public Modellocator modelLocator;
-	public string[] sounds;
+	[IgnoreNull]
 	public string emissive;
+	[IgnoreNull]
+	public string sprite;
+	[IgnoreNull]
+	public string particle;
+	[IgnoreNull][IgnoreAllFieldsNullFalseOrZero]
+	public Modellocator modelLocator;
+	[IgnoreNull]
+	public string[] sounds;
+	[IgnoreNull][IgnoreAllFieldsNullFalseOrZero]
 	public Flyingmodellocator flyingModelLocator;
+	[IgnoreNull]
 	public string normalMap;
+	[IgnoreNull]
 	public string[] source;
+	[IgnoreNull]
 	public string translationKey;
 
 	public Palette Copy()
@@ -294,15 +368,25 @@ public class Modellocator
 {
 	public string factoryType;
 	public string[] pqc;
+	[IgnoreZero]
 	public float yRotation;
+	[IgnoreZero]
 	public float movementThreshold;
+	[IgnoreZero]
 	public float rotateAngleX;
+	[IgnoreZero]
 	public float animationIncrement;
+	[IgnoreZero]
 	public float rotateAngleY;
+	[IgnoreZero]
 	public float animationThreshold;
+	[IgnoreZero]
 	public float zRotation;
+	[IgnoreZero]
 	public float transparency2;
+	[IgnoreZero]
 	public float yOffset;
+	[IgnoreZero]
 	public int xRotation;
 
 	public Modellocator Copy()
@@ -330,10 +414,15 @@ public class Flyingmodellocator
 {
 	public string factoryType;
 	public string[] pqc;
+	[IgnoreZero]
 	public float animationIncrement;
+	[IgnoreZero]
 	public float movementThreshold;
+	[IgnoreZero]
 	public float yRotation;
+	[IgnoreZero]
 	public int rotateAngleX;
+	[IgnoreZero]
 	public int zRotation;
 
 	public Flyingmodellocator Copy()
@@ -356,12 +445,19 @@ public class Evolution
 {
 	public int level;
 	public string to;
+	[IgnoreNull]
 	public Condition[] conditions;
 	public string evoType;
+	[IgnoreNull][IgnoreEmptyArray]
 	public string[] moves;
+	[IgnoreNull][IgnoreAllFieldsNullFalseOrZero]
 	public Item item;
+	[IgnoreNull]
 	public string with;
+	[IgnoreNull][IgnoreEmptyArray]
 	public Condition[] anticonditions;
+
+	public Evolution() { }
 }
 
 [Serializable]
@@ -373,35 +469,63 @@ public class Item
 [Serializable]
 public class Condition
 {
+	[IgnoreNull][IgnoreEmptyString]
 	public string time;
-	public string evoConditionType;
+	[IgnoreNull]
 	public string[] withPokemon;
+	[IgnoreNull]
 	public string[] withTypes;
+	[IgnoreNull]
 	public string[] withForms;
+	[IgnoreZero]
 	public int friendship;
+	[IgnoreNull][IgnoreAllFieldsNullFalseOrZero]
 	public Item item;
+	[IgnoreZero]
 	public int critical;
+	[IgnoreNull][IgnoreEmptyString]
 	public string attackName;
+	[IgnoreNull][IgnoreEmptyString]
 	public string type;
+	[IgnoreNull]
 	public string[] biomes;
+	[IgnoreNull][IgnoreEmptyString]
 	public string evolutionRock;
+	[IgnoreZero]
 	public int maxRangeSquared;
+	[IgnoreNull][IgnoreEmptyString]
 	public string move;
+	[IgnoreZero]
 	public int uses;
+	[IgnoreNull][IgnoreEmptyString]
 	public string stat1;
+	[IgnoreNull][IgnoreEmptyString]
 	public string stat2;
+	[IgnoreZero]
 	public float ratio;
+	[IgnoreNull]
 	public string[] withPalettes;
+	[IgnoreZero]
 	public float chance;
+	[IgnoreNull]
 	public string[] genders;
+	[IgnoreNull][IgnoreEmptyString]
 	public string recoil;
+	[IgnoreNull][IgnoreEmptyString]
 	public string health;
-	public bool shiny;
+	public bool shiny; // uuhh....
+	[IgnoreZero]
 	public float minAltitude;
+	[IgnoreNull][IgnoreEmptyString]
 	public string weather;
+	[IgnoreZero]
 	public int nuggets;
+	[IgnoreNull]
 	public string[] natures;
+	[IgnoreNull][IgnoreEmptyString]
 	public string evolutionScroll;
+	[IgnoreZero]
 	public int blocksToWalk;
+	public string evoConditionType;
 }
 

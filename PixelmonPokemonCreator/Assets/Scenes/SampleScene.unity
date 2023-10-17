@@ -29199,7 +29199,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 352527322}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999998
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -34685,7 +34685,7 @@ MonoBehaviour:
   editor: {fileID: 749291979}
   input: {fileID: 1668473426}
   abilityListHolder: {fileID: 234925184}
-  abilityListItemPrefab: {fileID: 6386743558154880874, guid: 869853a15eba27d45be9c50945ef01df, type: 3}
+  abilityListItemPrefab: {fileID: 6868064474273304395, guid: 869853a15eba27d45be9c50945ef01df, type: 3}
   currentAbilities: []
 --- !u!1 &666444912
 GameObject:
@@ -84720,7 +84720,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1216033992}
   m_HandleRect: {fileID: 1216033991}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -90356,7 +90356,7 @@ MonoBehaviour:
   editor: {fileID: 749291979}
   input: {fileID: 7372240715046973209}
   abilityListHolder: {fileID: 587658491}
-  abilityListItemPrefab: {fileID: 6386743558154880874, guid: 869853a15eba27d45be9c50945ef01df, type: 3}
+  abilityListItemPrefab: {fileID: 6868064474273304395, guid: 869853a15eba27d45be9c50945ef01df, type: 3}
   currentAbilities: []
 --- !u!1 &1805202479
 GameObject:
@@ -96326,7 +96326,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 431211608}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999998
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
