@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EvolutionMoveListPanel : MonoBehaviour
+public class EvolutionMoveListPanel : MonoBehaviour, IMoveListEditor
 {
 	[SerializeField] EvolutionEditor editor;
 	[SerializeField] Transform listItemHolder;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveListItem : MonoBehaviour
 {
 	public TMPro.TMP_Text textItem;
-	public EvolutionMoveListPanel editor;
+	public IMoveListEditor editor;
 
 	public void Select()
 	{
