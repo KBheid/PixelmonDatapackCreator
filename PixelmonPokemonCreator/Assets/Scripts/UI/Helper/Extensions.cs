@@ -12,6 +12,14 @@ public static class Extensions
 		return -1;
 	}
 
+	public static int ToIntegerOrDefault(this string str, int defaultValue)
+	{
+		if (int.TryParse(str, out int res))
+			return res;
+
+		return defaultValue;
+	}
+
 	public static float ToFloatOrNegativeOne(this string str)
 	{
 		if (float.TryParse(str, out float res))
