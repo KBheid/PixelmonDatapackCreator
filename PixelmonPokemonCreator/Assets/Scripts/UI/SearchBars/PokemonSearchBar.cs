@@ -31,6 +31,9 @@ public class PokemonSearchBar : MonoBehaviour
 	public void SearchUpdated()
 	{
 		dropdown.Hide();
+		if (inputField.interactable == false)
+			return;
+
 		string searchString = inputField.text.ToLower();
 
 		dropdown.ClearOptions();
@@ -91,9 +94,13 @@ public class PokemonSearchBar : MonoBehaviour
 
 	private void RefreshOptions()
 	{
-		dropdown.enabled = false;
-		dropdown.enabled = true;
-		dropdown.Show();
+		if (inputField.interactable)
+		{
+			dropdown.enabled = false;
+			dropdown.enabled = true;
+			dropdown.Show();
+		}
+		else dropdown.Hide();
 	}
 
 	private void LateUpdate()

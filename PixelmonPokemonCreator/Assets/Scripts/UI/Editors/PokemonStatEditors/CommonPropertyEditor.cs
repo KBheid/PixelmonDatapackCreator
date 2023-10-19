@@ -51,6 +51,7 @@ public class CommonPropertyEditor : MonoBehaviour
 		selectedForm.weight = weightInput.text.ToIntegerOrNegativeOne();
 		selectedForm.catchRate = catchRateInput.text.ToIntegerOrNegativeOne();
 		selectedForm.malePercentage = malePercentInput.text.ToFloatOrNegativeOne();
+		selectedForm.defaultBaseForm = defaultBaseFormDropdown.options[defaultBaseFormDropdown.value].text;
 	}
 
 	public void RefreshFormContent()
@@ -64,7 +65,6 @@ public class CommonPropertyEditor : MonoBehaviour
 	}
 
 
-	// TODO: Form selection
 	public void UpdateFormSelection()
 	{
 		if (updating)
@@ -167,7 +167,7 @@ public class CommonPropertyEditor : MonoBehaviour
 		// Forms
 		List<Form> forms = new List<Form>(selectedPokemon.forms);
 		List<TMPro.TMP_Dropdown.OptionData> formNames = forms.ConvertAll(form => new TMPro.TMP_Dropdown.OptionData(form.name));
-		formDropdown.options = formNames;
+		formDropdown.options = new List<TMPro.TMP_Dropdown.OptionData>(formNames);
 		formDropdown.options.Add(new TMPro.TMP_Dropdown.OptionData("[ Add Form ]"));
 		formDropdown.SetDropdownToStringValue(selectedForm.name);
 

@@ -15,8 +15,11 @@ public class MoveSearchBar : MonoBehaviour
 
 	public void SearchSelected()
 	{
-		dropdown.Show();
-		SearchUpdated();
+		if (inputField.interactable)
+		{
+			dropdown.Show();
+			SearchUpdated();
+		}
 	}
 
 	public void SearchDeselected()
@@ -26,6 +29,9 @@ public class MoveSearchBar : MonoBehaviour
 
 	public void SearchUpdated()
 	{
+		if (!inputField.interactable)
+			return;
+
 		string searchString = inputField.text.ToLower();
 
 		var valid = MovesManager.instance.moves.Where(move => move.attackName.ToLower().Contains(searchString));
@@ -50,6 +56,9 @@ public class MoveSearchBar : MonoBehaviour
 
 	private void RefreshOptions()
 	{
+		if (!inputField.interactable)
+			return;
+
 		dropdown.enabled = false;
 		dropdown.enabled = true;
 		dropdown.Show();
