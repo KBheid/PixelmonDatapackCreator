@@ -20,52 +20,71 @@ public class EvolutionAttributeEditor : MonoBehaviour
 	public List<EvoTypeWindow> windows;
 
 	private EvoTypeWindow current;
+	bool updating = false;
 
-	private void OnEnable()
+	void SetInputEnabled(bool enabled)
 	{
-		EvolutionEditor.OnEvolutionChanged += EvolutionChanged;
-		current = windows[0];
-	}
+		targetInput.interactable		= enabled;
+		targetFormInput.interactable	= enabled;
+		evoTypeDropdown.interactable	= enabled;
+		levelInput.interactable			= enabled;
+		itemIDInput.interactable		= enabled;
 
-	void EvolutionChanged(Evolution e)
-	{
-		selectedEvolution = e;
-		if (e == null)
+		// Empty out fields if not valid selection
+		if (!enabled)
 		{
-			targetInput.interactable = false;
-			targetFormInput.interactable = false;
-			evoTypeDropdown.interactable = false;
-			levelInput.interactable = false;
-			itemIDInput.interactable = false;
-
 			targetInput.text = "";
 			targetFormInput.text = "";
 
 			evoTypeDropdown.value = 0;
 			levelInput.text = "";
 			itemIDInput.text = "";
+		}
+	}
+
+	public void UpdateEvolution()
+	{
+		if (selectedEvolution == null)
+			return;
+
+		selectedEvolution.evoType = evoTypeDropdown.options[evoTypeDropdown.value].text;
+
+		switch (selectedEvolution.evoType)
+		{
+			case "leveling":
+				selectedEvolution.level = levelInput.text.ToIntegerOrNegativeOne();
+				selectedEvolution.item = null;
+				break;
+			case "interact":
+				selectedEvolution.item = new Item() { itemID = itemIDInput.text };
+				selectedEvolution.level = 0;
+				break;
+		}
+
+		SetEvolutionTarget();
+	}
+
+	void UpdateContent()
+	{
+		if (selectedEvolution == null)
+		{
+			SetInputEnabled(false);
 			return;
 		}
 
-		targetInput.interactable = true;
-		targetFormInput.interactable = true;
-		evoTypeDropdown.interactable = true;
-		levelInput.interactable = true;
-		itemIDInput.interactable = true;
+		SetInputEnabled(true);
 
-		string[] split = e.to.Split(" form:");
+		string[] split = selectedEvolution.to.Split(" form:");
 		string species = split[0];
 		string form = (split.Length > 1) ? split[1] : "";
 		targetInput.text = species;
 		targetFormInput.text = form;
+		evoTypeDropdown.SetDropdownToStringValue(selectedEvolution.evoType);
 
-		List<string> options = evoTypeDropdown.options.ConvertAll(option => option.text);
-		evoTypeDropdown.value = options.IndexOf(e.evoType);
+		levelInput.text = (selectedEvolution.level == 0) ? "" : selectedEvolution.level.ToString();
 
-		levelInput.text = (e.level == 0) ? "" : e.level.ToString();
-
-		if (e.item != null)
-			itemIDInput.text = e.item.itemID;
+		if (selectedEvolution.item != null)
+			itemIDInput.text = selectedEvolution.item.itemID;
 		else
 			itemIDInput.text = "";
 
@@ -76,7 +95,15 @@ public class EvolutionAttributeEditor : MonoBehaviour
 			formSearch.forms = forms;
 		}
 
-		UpdateWindow(e.evoType);
+		UpdateWindow(selectedEvolution.evoType);
+	}
+
+	void EvolutionChanged(Evolution e)
+	{
+		updating = true;
+		selectedEvolution = e;
+		UpdateContent();
+		updating = false;
 	}
 
 	public void SetEvolutionTarget()
@@ -92,7 +119,7 @@ public class EvolutionAttributeEditor : MonoBehaviour
 
 		selectedEvolution.to = toType;
 
-		PokemonManager.instance.SelectForm(PokemonManager.instance.selectedForm);
+		//PokemonManager.instance.SelectForm(PokemonManager.instance.selectedForm);
 	}
 
 	private void UpdateWindow(string evoType)
@@ -109,6 +136,9 @@ public class EvolutionAttributeEditor : MonoBehaviour
 
 	public void EvoTypeSelected()
 	{
+		if (updating || selectedEvolution == null)
+			return;
+
 		string choice = evoTypeDropdown.options[evoTypeDropdown.value].text;
 		foreach (EvoTypeWindow window in windows)
 		{
@@ -117,6 +147,7 @@ public class EvolutionAttributeEditor : MonoBehaviour
 				SetSelection(window);
 			}
 		}
+		selectedEvolution.evoType = choice;
 	}
 
 
@@ -133,6 +164,18 @@ public class EvolutionAttributeEditor : MonoBehaviour
 		current.w1.SetActive(true);
 		current.w2.SetActive(true);
 	}
+	
+	private void OnEnable()
+	{
+		EvolutionEditor.OnEvolutionChanged += EvolutionChanged;
+		current = windows[0];
+	}
+
+	private void OnDisable()
+	{
+		EvolutionEditor.OnEvolutionChanged -= EvolutionChanged;
+	}
+
 }
 
 [Serializable]

@@ -48,10 +48,17 @@ public class EvolutionMoveListPanel : MonoBehaviour, IMoveListEditor
 		it.textItem.text = move;
 
 		moves.Add(move);
+		selectedMove = it;
 	}
 
 	public void Remove()
 	{
+		if (selectedMove == null)
+		{
+			removeButton.interactable = false;
+			return;
+		}
+
 		moves.Remove(selectedMove.textItem.text);
 		Destroy(selectedMove.gameObject);
 

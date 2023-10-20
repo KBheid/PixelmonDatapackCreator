@@ -9,9 +9,12 @@ using UnityEngine;
 
 
 [AttributeUsage(AttributeTargets.Field)]
-public abstract class IgnoreAttribute : Attribute
+public class IgnoreAttribute : Attribute
 {
-    public abstract bool DoIgnore(object obj);
+    public virtual bool DoIgnore(object obj)
+	{
+        return true;
+	}
 }
 public class IgnoreEmptyStringAttribute : IgnoreAttribute
 {
@@ -83,7 +86,6 @@ public class IgnoreAllFieldsNullFalseOrZeroAttribute : IgnoreAttribute
         return true;
     }
 }
-
 
 [AttributeUsage(AttributeTargets.Field)]
 public abstract class IgnoreArrayAttribute : Attribute

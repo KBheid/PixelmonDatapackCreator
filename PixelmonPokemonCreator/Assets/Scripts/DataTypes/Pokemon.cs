@@ -52,8 +52,10 @@ public class Form
 	[IgnoreNull]
 	public string defaultBaseForm;
 	//[IgnoreEmptyArray][IgnoreEmptyStringArray]
+	[IgnoreNull]
 	public string[] megaItems;
 	//[IgnoreEmptyArray][IgnoreEmptyStringArray]
+	[IgnoreNull]
 	public string[] megas;
 	[IgnoreAllFieldsNullFalseOrZero]
 	public Gigantamax gigantamax;
@@ -513,6 +515,7 @@ public class Condition
 	public string recoil;
 	[IgnoreNull][IgnoreEmptyString]
 	public string health;
+	[Ignore]
 	public bool shiny; // uuhh....
 	[IgnoreZero]
 	public float minAltitude;

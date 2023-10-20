@@ -7,8 +7,9 @@ public class ErrorPanel : MonoBehaviour
 {
     [SerializeField] StatsEditor statsEditor;
     [SerializeField] EvolutionEditor evoEditor;
+    [SerializeField] MovementEditor movementEditor;
     [SerializeField] EvolutionConditionEditor evoConditionEditor;
-    // [SerializeField] MovesEditor movesEditor;
+    [SerializeField] GameObject movesEditorWindow;
 
     [SerializeField] Transform listHolder;
     [SerializeField] ErrorListItem listItemPrefab;
@@ -81,14 +82,20 @@ public class ErrorPanel : MonoBehaviour
         }
         if (error.form != null)
         {
-            evoEditor.gameObject.SetActive(false);
             statsEditor.gameObject.SetActive(true);
+            movesEditorWindow.SetActive(false);
+            evoEditor.gameObject.SetActive(false);
+            movementEditor.gameObject.SetActive(false);
+
             PokemonManager.instance.SelectForm(error.form);
         }
         if (error.evolution != null)
         {
             statsEditor.gameObject.SetActive(false);
+            movesEditorWindow.SetActive(false);
             evoEditor.gameObject.SetActive(true);
+            movementEditor.gameObject.SetActive(false);
+
             evoEditor.SelectEvolution(error.evolution);
         }
         if (error.condition != null) 
